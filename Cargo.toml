@@ -11,7 +11,8 @@ description="placeholder ; writing"
 
 [dependencies]
 blake3 = "0.3.8"
-safer-ffi = { version = "*", features = ["proc_macros"] }
+ed25519-dalek-blake3 = "1.0.2"
+safer-ffi = { version = "0.0.6", features = ["proc_macros"] }
 
 [lib]
 crate-type = ["cdylib","staticlib"]
