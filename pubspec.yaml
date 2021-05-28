@@ -10,8 +10,7 @@ ffigen:
   name: Ffi
   headers:
     entry-points:
-      - 'h/blake3.h'
-      # - 'blake3.cbindgen.h'
+      - 'ffi.h'
 
 dependencies:
   path:

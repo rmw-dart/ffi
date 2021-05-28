@@ -19,7 +19,7 @@ rm -rf *.h
 
 export RUST_BACKTRACE=1
 #cbindgen --config cbindgen.toml --output h/cbindgen.h
-cargo +nightly test --features c-headers -- c_headers
+cargo +nightly test --features c-headers -- c_h
 dart run ffigen
 
 RUSTFLAGS="-C target-feature=+avx,+fma,+aes,+sse,+sse2,+sse3,+ssse3,+sse4.1" RUST_BACKTRACE=1 \

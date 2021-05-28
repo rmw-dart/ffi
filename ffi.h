@@ -18,24 +18,29 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-void hash_free (
+typedef struct Ed25519Secret Ed25519Secret_t;
+
+Ed25519Secret_t * ed25519_secret_from_bytes (
+    uint8_t const * data);
+
+void blake3_hash_free (
     uint8_t * data);
 
-uint8_t const * hash (
+uint8_t const * blake3_hash (
     uint8_t const * data,
     size_t len);
 
-typedef struct Hasher Hasher_t;
+typedef struct Blake3Hasher Blake3Hasher_t;
 
-Hasher_t * hasher_new (void);
+Blake3Hasher_t * blake3_hasher_new (void);
 
-void hasher_update (
-    Hasher_t * hasher,
+void blake3_hasher_update (
+    Blake3Hasher_t * hasher,
     uint8_t const * data,
     size_t len);
 
-uint8_t const * hasher_end (
-    Hasher_t * hasher);
+uint8_t const * blake3_hasher_end (
+    Blake3Hasher_t * hasher);
 
 
 #ifdef __cplusplus
