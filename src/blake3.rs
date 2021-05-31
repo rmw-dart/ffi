@@ -1,5 +1,6 @@
 use blake3::Hasher;
 use core::slice;
+// use dart_sdk_sys::{Dart_Handle, Dart_NewFinalizableHandle};
 use safer_ffi::prelude::*;
 
 #[derive_ReprC]
@@ -46,3 +47,15 @@ pub fn blake3_hasher_end(hasher: repr_c::Box<Blake3Hasher>) -> *const u8 {
   drop(hasher);
   Box::into_raw(h) as *const u8
 }
+
+/*
+
+fn _blake3_hasher_gc(isolate_callback_data: *mut c_void, peer: *mut c_void) {
+  drop(peer);
+}
+
+#[ffi_export]
+pub fn blake3_hasher_gc(object: Dart_Handle, peer: *mut c_void) {
+  Dart_NewFinalizableHandle(object, peer, 0, _blake3_hasher_gc)
+}
+*/
