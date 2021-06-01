@@ -53,19 +53,9 @@ pub fn ed25519_verify(keypair: repr_c::Box<Ed25519Keypair>, data: *const u8, len
 */
 
 #[ffi_export]
-pub fn ed25519_sign(
-  keypair: repr_c::Box<Ed25519Keypair>,
-  data: *const u8,
-  len: usize,
-) -> c_slice::Box<u8> {
+pub fn ed25519_sign(keypair: &mut Ed25519Keypair, data: *const u8, len: usize) -> *const u8 {
   let msg = unsafe { slice::from_raw_parts(data, len) };
-  keypair
-    .key
-    .sign(msg)
-    .to_bytes()
-    .to_vec()
-    .into_boxed_slice()
-    .into()
+  Box::into_raw(Box::new(keypair.key.sign(msg).to_bytes())) as *const u8
 }
 
 /*

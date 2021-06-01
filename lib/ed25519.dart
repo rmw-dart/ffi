@@ -34,6 +34,13 @@ import 'package:ffi/ffi.dart' show calloc;
    }
    */
 
+Uint8List rand_u8_32() {
+  final ptr = So.rand_u8_32();
+  final r = Uint8List.fromList(ptr.asTypedList(32));
+  So.free_u8_32(ptr);
+  return r;
+}
+
 class Ed25519 {
   late Pointer<Ffi.Ed25519Keypair> keypair;
   Ed25519(Uint8List seed) {
@@ -43,8 +50,10 @@ class Ed25519 {
   }
   Uint8List sign(Uint8List msg) {
     final ptr = msg.ptr();
-    final s = So.ed25519_sign(this.keypair, ptr, msg.length);
+    final sptr = So.ed25519_sign(this.keypair, ptr, msg.length);
     calloc.free(ptr);
-    return s.ptr.asTypedList(s.len);
+    final r = Uint8List.fromList(sptr.asTypedList(64));
+    So.free_u8(sptr, 64);
+    return r;
   }
 }

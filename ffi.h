@@ -18,6 +18,10 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+void free_u8 (
+    uint8_t * data,
+    size_t len);
+
 void free_u8_32 (
     uint8_t * data);
 
@@ -28,35 +32,7 @@ typedef struct Ed25519Keypair Ed25519Keypair_t;
 Ed25519Keypair_t * ed25519_from_seed (
     uint8_t const * data);
 
-/** \brief
- *  [`Box`][`rust::Box`]`<[T]>` (fat pointer to a slice),
- *  but with a guaranteed `#[repr(C)]` layout.
- * 
- *  # C layout (for some given type T)
- * 
- *  ```c
- *  typedef struct {
- *      // Cannot be NULL
- *      T * ptr;
- *      size_t len;
- *  } slice_T;
- *  ```
- * 
- *  # Nullable pointer?
- * 
- *  If you want to support the above typedef, but where the `ptr` field is
- *  allowed to be `NULL` (with the contents of `len` then being undefined)
- *  use the `Option< slice_ptr<_> >` type.
- */
-typedef struct {
-
-    uint8_t * ptr;
-
-    size_t len;
-
-} slice_boxed_uint8_t;
-
-slice_boxed_uint8_t ed25519_sign (
+uint8_t const * ed25519_sign (
     Ed25519Keypair_t * keypair,
     uint8_t const * data,
     size_t len);

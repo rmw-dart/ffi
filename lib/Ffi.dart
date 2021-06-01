@@ -17,6 +17,19 @@ class Ffi {
           lookup)
       : _lookup = lookup;
 
+  void free_u8(
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _free_u8(
+      data,
+      len,
+    );
+  }
+
+  late final _free_u8_ptr = _lookup<ffi.NativeFunction<_c_free_u8>>('free_u8');
+  late final _dart_free_u8 _free_u8 = _free_u8_ptr.asFunction<_dart_free_u8>();
+
   void free_u8_32(
     ffi.Pointer<ffi.Uint8> data,
   ) {
@@ -52,7 +65,7 @@ class Ffi {
   late final _dart_ed25519_from_seed _ed25519_from_seed =
       _ed25519_from_seed_ptr.asFunction<_dart_ed25519_from_seed>();
 
-  slice_boxed_uint8_t ed25519_sign(
+  ffi.Pointer<ffi.Uint8> ed25519_sign(
     ffi.Pointer<Ed25519Keypair> keypair,
     ffi.Pointer<ffi.Uint8> data,
     int len,
@@ -208,32 +221,6 @@ class _opaque_pthread_t extends ffi.Struct {
 }
 
 class Ed25519Keypair extends ffi.Opaque {}
-
-/// \brief
-/// [`Box`][`rust::Box`]`<[T]>` (fat pointer to a slice),
-/// but with a guaranteed `#[repr(C)]` layout.
-///
-/// # C layout (for some given type T)
-///
-/// ```c
-/// typedef struct {
-/// // Cannot be NULL
-/// T * ptr;
-/// size_t len;
-/// } slice_T;
-/// ```
-///
-/// # Nullable pointer?
-///
-/// If you want to support the above typedef, but where the `ptr` field is
-/// allowed to be `NULL` (with the contents of `len` then being undefined)
-/// use the `Option< slice_ptr<_> >` type.
-class slice_boxed_uint8_t extends ffi.Struct {
-  external ffi.Pointer<ffi.Uint8> ptr;
-
-  @ffi.Uint64()
-  external int len;
-}
 
 class Blake3Hasher extends ffi.Opaque {}
 
@@ -411,6 +398,16 @@ const int SIG_ATOMIC_MIN = -2147483648;
 
 const int SIG_ATOMIC_MAX = 2147483647;
 
+typedef _c_free_u8 = ffi.Void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_free_u8 = void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
 typedef _c_free_u8_32 = ffi.Void Function(
   ffi.Pointer<ffi.Uint8> data,
 );
@@ -431,13 +428,13 @@ typedef _dart_ed25519_from_seed = ffi.Pointer<Ed25519Keypair> Function(
   ffi.Pointer<ffi.Uint8> data,
 );
 
-typedef _c_ed25519_sign = slice_boxed_uint8_t Function(
+typedef _c_ed25519_sign = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Ed25519Keypair> keypair,
   ffi.Pointer<ffi.Uint8> data,
   ffi.Uint64 len,
 );
 
-typedef _dart_ed25519_sign = slice_boxed_uint8_t Function(
+typedef _dart_ed25519_sign = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Ed25519Keypair> keypair,
   ffi.Pointer<ffi.Uint8> data,
   int len,
