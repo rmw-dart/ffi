@@ -56,4 +56,13 @@ class Ed25519 {
     So.free_u8(sptr, 64);
     return r;
   }
+
+  bool verify(Uint8List sign, Uint8List data) {
+    final ptr = data.ptr();
+    final sptr = sign.ptr();
+    final r = So.ed25519_verify(this.keypair, sptr, ptr, data.length);
+    calloc.free(ptr);
+    calloc.free(sptr);
+    return r;
+  }
 }

@@ -85,6 +85,19 @@ class Ffi {
   late final _dart_ed25519_verify _ed25519_verify =
       _ed25519_verify_ptr.asFunction<_dart_ed25519_verify>();
 
+  ffi.Pointer<ffi.Uint8> ed25519_pk(
+    ffi.Pointer<Ed25519Keypair> keypair,
+  ) {
+    return _ed25519_pk(
+      keypair,
+    );
+  }
+
+  late final _ed25519_pk_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_pk>>('ed25519_pk');
+  late final _dart_ed25519_pk _ed25519_pk =
+      _ed25519_pk_ptr.asFunction<_dart_ed25519_pk>();
+
   bool ed25519_pk_verify(
     ffi.Pointer<ffi.Uint8> pk,
     ffi.Pointer<ffi.Uint8> sign,
@@ -499,6 +512,14 @@ typedef _dart_ed25519_verify = int Function(
   ffi.Pointer<ffi.Uint8> sign,
   ffi.Pointer<ffi.Uint8> data,
   int len,
+);
+
+typedef _c_ed25519_pk = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+);
+
+typedef _dart_ed25519_pk = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
 );
 
 typedef _c_ed25519_pk_verify = ffi.Uint8 Function(

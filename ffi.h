@@ -41,6 +41,9 @@ bool ed25519_verify (
     uint8_t const * data,
     size_t len);
 
+uint8_t const * ed25519_pk (
+    Ed25519Keypair_t * keypair);
+
 bool ed25519_pk_verify (
     uint8_t const * pk,
     uint8_t const * sign,
