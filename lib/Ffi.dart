@@ -17,33 +17,57 @@ class Ffi {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<Ed25519Secret> ed25519_secret_from_bytes(
+  void free_u8_32(
     ffi.Pointer<ffi.Uint8> data,
   ) {
-    return _ed25519_secret_from_bytes(
+    return _free_u8_32(
       data,
     );
   }
 
-  late final _ed25519_secret_from_bytes_ptr =
-      _lookup<ffi.NativeFunction<_c_ed25519_secret_from_bytes>>(
-          'ed25519_secret_from_bytes');
-  late final _dart_ed25519_secret_from_bytes _ed25519_secret_from_bytes =
-      _ed25519_secret_from_bytes_ptr
-          .asFunction<_dart_ed25519_secret_from_bytes>();
+  late final _free_u8_32_ptr =
+      _lookup<ffi.NativeFunction<_c_free_u8_32>>('free_u8_32');
+  late final _dart_free_u8_32 _free_u8_32 =
+      _free_u8_32_ptr.asFunction<_dart_free_u8_32>();
 
-  void blake3_hash_free(
+  ffi.Pointer<ffi.Uint8> rand_u8_32() {
+    return _rand_u8_32();
+  }
+
+  late final _rand_u8_32_ptr =
+      _lookup<ffi.NativeFunction<_c_rand_u8_32>>('rand_u8_32');
+  late final _dart_rand_u8_32 _rand_u8_32 =
+      _rand_u8_32_ptr.asFunction<_dart_rand_u8_32>();
+
+  ffi.Pointer<Ed25519Keypair> ed25519_from_seed(
     ffi.Pointer<ffi.Uint8> data,
   ) {
-    return _blake3_hash_free(
+    return _ed25519_from_seed(
       data,
     );
   }
 
-  late final _blake3_hash_free_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hash_free>>('blake3_hash_free');
-  late final _dart_blake3_hash_free _blake3_hash_free =
-      _blake3_hash_free_ptr.asFunction<_dart_blake3_hash_free>();
+  late final _ed25519_from_seed_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_from_seed>>('ed25519_from_seed');
+  late final _dart_ed25519_from_seed _ed25519_from_seed =
+      _ed25519_from_seed_ptr.asFunction<_dart_ed25519_from_seed>();
+
+  slice_boxed_uint8_t ed25519_sign(
+    ffi.Pointer<Ed25519Keypair> keypair,
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _ed25519_sign(
+      keypair,
+      data,
+      len,
+    );
+  }
+
+  late final _ed25519_sign_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_sign>>('ed25519_sign');
+  late final _dart_ed25519_sign _ed25519_sign =
+      _ed25519_sign_ptr.asFunction<_dart_ed25519_sign>();
 
   ffi.Pointer<ffi.Uint8> blake3_hash(
     ffi.Pointer<ffi.Uint8> data,
@@ -183,7 +207,33 @@ class _opaque_pthread_t extends ffi.Struct {
   external ffi.Array<ffi.Int8> __opaque;
 }
 
-class Ed25519Secret extends ffi.Opaque {}
+class Ed25519Keypair extends ffi.Opaque {}
+
+/// \brief
+/// [`Box`][`rust::Box`]`<[T]>` (fat pointer to a slice),
+/// but with a guaranteed `#[repr(C)]` layout.
+///
+/// # C layout (for some given type T)
+///
+/// ```c
+/// typedef struct {
+/// // Cannot be NULL
+/// T * ptr;
+/// size_t len;
+/// } slice_T;
+/// ```
+///
+/// # Nullable pointer?
+///
+/// If you want to support the above typedef, but where the `ptr` field is
+/// allowed to be `NULL` (with the contents of `len` then being undefined)
+/// use the `Option< slice_ptr<_> >` type.
+class slice_boxed_uint8_t extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint8> ptr;
+
+  @ffi.Uint64()
+  external int len;
+}
 
 class Blake3Hasher extends ffi.Opaque {}
 
@@ -361,20 +411,36 @@ const int SIG_ATOMIC_MIN = -2147483648;
 
 const int SIG_ATOMIC_MAX = 2147483647;
 
-typedef _c_ed25519_secret_from_bytes = ffi.Pointer<Ed25519Secret> Function(
+typedef _c_free_u8_32 = ffi.Void Function(
   ffi.Pointer<ffi.Uint8> data,
 );
 
-typedef _dart_ed25519_secret_from_bytes = ffi.Pointer<Ed25519Secret> Function(
+typedef _dart_free_u8_32 = void Function(
   ffi.Pointer<ffi.Uint8> data,
 );
 
-typedef _c_blake3_hash_free = ffi.Void Function(
+typedef _c_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
+
+typedef _dart_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
+
+typedef _c_ed25519_from_seed = ffi.Pointer<Ed25519Keypair> Function(
   ffi.Pointer<ffi.Uint8> data,
 );
 
-typedef _dart_blake3_hash_free = void Function(
+typedef _dart_ed25519_from_seed = ffi.Pointer<Ed25519Keypair> Function(
   ffi.Pointer<ffi.Uint8> data,
+);
+
+typedef _c_ed25519_sign = slice_boxed_uint8_t Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_ed25519_sign = slice_boxed_uint8_t Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
 );
 
 typedef _c_blake3_hash = ffi.Pointer<ffi.Uint8> Function(

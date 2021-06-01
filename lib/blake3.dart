@@ -9,7 +9,7 @@ Uint8List hash(Uint8List data) {
   final h = So.blake3_hash(ptr, data.length);
   calloc.free(ptr);
   final hash = Uint8List.fromList(h.asTypedList(32));
-  So.blake3_hash_free(h);
+  So.free_u8_32(h);
   return hash;
 }
 
@@ -27,7 +27,7 @@ class Hasher {
   Uint8List end() {
     final h = So.blake3_hasher_end(this.hasher);
     final hash = Uint8List.fromList(h.asTypedList(32));
-    So.blake3_hash_free(h);
+    So.free_u8_32(h);
     return hash;
   }
 }
