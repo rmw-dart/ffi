@@ -41,6 +41,17 @@ Uint8List rand_u8_32() {
   return r;
 }
 
+bool ed25519_verify(Uint8List pk, Uint8List sign, Uint8List data) {
+  final pkptr = pk.ptr();
+  final ptr = data.ptr();
+  final sptr = sign.ptr();
+  final r = So.ed25519_pk_verify(pkptr, sptr, ptr, data.length);
+  calloc.free(pkptr);
+  calloc.free(ptr);
+  calloc.free(sptr);
+  return r;
+}
+
 class Ed25519 {
   late Pointer<Ffi.Ed25519Keypair> keypair;
   Ed25519(Uint8List seed) {
@@ -48,6 +59,14 @@ class Ed25519 {
     this.keypair = So.ed25519_from_seed(ptr);
     calloc.free(ptr);
   }
+
+  Uint8List pk() {
+    final ptr = So.ed25519_pk(this.keypair);
+    final pk = Uint8List.fromList(ptr.asTypedList(32));
+    So.free_u8_32(ptr);
+    return pk;
+  }
+
   Uint8List sign(Uint8List msg) {
     final ptr = msg.ptr();
     final sptr = So.ed25519_sign(this.keypair, ptr, msg.length);
