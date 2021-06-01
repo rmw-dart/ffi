@@ -60,6 +60,13 @@ class Ed25519 {
     calloc.free(ptr);
   }
 
+  Uint8List sk() {
+    final ptr = So.ed25519_sk(this.keypair);
+    final pk = Uint8List.fromList(ptr.asTypedList(32));
+    So.free_u8_32(ptr);
+    return pk;
+  }
+
   Uint8List pk() {
     final ptr = So.ed25519_pk(this.keypair);
     final pk = Uint8List.fromList(ptr.asTypedList(32));

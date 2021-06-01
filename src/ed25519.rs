@@ -54,6 +54,11 @@ pub fn ed25519_verify(
 }
 
 #[ffi_export]
+pub fn ed25519_sk(keypair: &mut Ed25519Keypair) -> *const u8 {
+  const_u8(*keypair.key.secret.as_bytes())
+}
+
+#[ffi_export]
 pub fn ed25519_pk(keypair: &mut Ed25519Keypair) -> *const u8 {
   const_u8(*keypair.key.public.as_bytes())
 }
