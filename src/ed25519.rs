@@ -60,9 +60,19 @@ pub fn ed25519_sk(keypair: &mut Ed25519Keypair) -> *const u8 {
 }
 
 #[ffi_export]
+pub fn ed25519_pk_x25519_pk(pk: *const u8) -> *const u8 {
+  let pk = unsafe { slice::from_raw_parts(pk, 32) };
+  let pk = PublicKey::from_bytes(pk).unwrap();
+  _x25519_pk(&pk)
+}
+
+pub fn _x25519_pk(pk: &PublicKey) -> *const u8 {
+  const_u8(*X25519PublicKey::from(*pk.as_bytes()).as_bytes())
+}
+
+#[ffi_export]
 pub fn ed25519_x25519_pk(keypair: &mut Ed25519Keypair) -> *const u8 {
-  let pk = keypair.key.public.1.to_montgomery().as_bytes();
-  const_u8(*X25519PublicKey::from(*pk).as_bytes())
+  _x25519_pk(&keypair.key.public)
 }
 
 #[ffi_export]
