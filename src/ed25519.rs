@@ -2,6 +2,7 @@ use core::slice;
 use ed25519_dalek_blake3::{Keypair, PublicKey, SecretKey, Signature, Signer, Verifier};
 use rand::Rng;
 use safer_ffi::prelude::*;
+use std::convert::TryInto;
 
 /*
 use rand::rngs::OsRng;
@@ -18,8 +19,6 @@ fn _seed() -> [u8; 32] {
 pub struct Ed25519Keypair {
   pub key: Keypair,
 }
-
-// randBytes
 
 /*
 TODO : 自动释放内存。
@@ -44,13 +43,31 @@ pub fn ed25519_from_seed(data: *const u8) -> repr_c::Box<Ed25519Keypair> {
     key: Keypair::from_bytes(&skv as &[u8]).unwrap(),
   })
 }
-
-/*
 #[ffi_export]
-pub fn ed25519_verify(keypair: repr_c::Box<Ed25519Keypair>, data: *const u8, len: usize) -> bool {
-  let sign = unsafe { slice::from_raw_parts(data, len) };
+pub fn ed25519_verify(
+  keypair: &mut Ed25519Keypair,
+  sign: *const u8,
+  data: *const u8,
+  len: usize,
+) -> bool {
+  _verify(keypair.key.public, sign, data, len)
 }
-*/
+
+#[ffi_export]
+pub fn ed25519_pk_verify(pk: *const u8, sign: *const u8, data: *const u8, len: usize) -> bool {
+  let pk = unsafe { slice::from_raw_parts(pk, 32) };
+  let pk = PublicKey::from_bytes(pk).unwrap();
+  _verify(pk, sign, data, len)
+}
+
+#[inline]
+pub fn _verify(pk: PublicKey, sign: *const u8, data: *const u8, len: usize) -> bool {
+  let data = unsafe { slice::from_raw_parts(data, len) };
+  let sign = unsafe { slice::from_raw_parts(sign, 64) };
+  let sign: [u8; 64] = sign.try_into().unwrap();
+  let signature = Signature::from(sign);
+  pk.verify(data, &signature).is_ok()
+}
 
 #[ffi_export]
 pub fn ed25519_sign(keypair: &mut Ed25519Keypair, data: *const u8, len: usize) -> *const u8 {
@@ -62,12 +79,3 @@ pub fn ed25519_sign(keypair: &mut Ed25519Keypair, data: *const u8, len: usize) -
 pub fn ed25519_free(keypair: repr_c::Box<Ed25519Keypair>) {
   drop(keypair)
 }
-
-/*
-keypair(seed)
-sign
-pk
-
-pk_from_bytes
-verify
-*/

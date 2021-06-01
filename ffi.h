@@ -32,10 +32,28 @@ typedef struct Ed25519Keypair Ed25519Keypair_t;
 Ed25519Keypair_t * ed25519_from_seed (
     uint8_t const * data);
 
+
+#include <stdbool.h>
+
+bool ed25519_verify (
+    Ed25519Keypair_t * keypair,
+    uint8_t const * sign,
+    uint8_t const * data,
+    size_t len);
+
+bool ed25519_pk_verify (
+    uint8_t const * pk,
+    uint8_t const * sign,
+    uint8_t const * data,
+    size_t len);
+
 uint8_t const * ed25519_sign (
     Ed25519Keypair_t * keypair,
     uint8_t const * data,
     size_t len);
+
+void ed25519_free (
+    Ed25519Keypair_t * keypair);
 
 uint8_t const * blake3_hash (
     uint8_t const * data,

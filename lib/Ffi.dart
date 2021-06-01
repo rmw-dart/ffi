@@ -65,6 +65,46 @@ class Ffi {
   late final _dart_ed25519_from_seed _ed25519_from_seed =
       _ed25519_from_seed_ptr.asFunction<_dart_ed25519_from_seed>();
 
+  bool ed25519_verify(
+    ffi.Pointer<Ed25519Keypair> keypair,
+    ffi.Pointer<ffi.Uint8> sign,
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _ed25519_verify(
+          keypair,
+          sign,
+          data,
+          len,
+        ) !=
+        0;
+  }
+
+  late final _ed25519_verify_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_verify>>('ed25519_verify');
+  late final _dart_ed25519_verify _ed25519_verify =
+      _ed25519_verify_ptr.asFunction<_dart_ed25519_verify>();
+
+  bool ed25519_pk_verify(
+    ffi.Pointer<ffi.Uint8> pk,
+    ffi.Pointer<ffi.Uint8> sign,
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _ed25519_pk_verify(
+          pk,
+          sign,
+          data,
+          len,
+        ) !=
+        0;
+  }
+
+  late final _ed25519_pk_verify_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_pk_verify>>('ed25519_pk_verify');
+  late final _dart_ed25519_pk_verify _ed25519_pk_verify =
+      _ed25519_pk_verify_ptr.asFunction<_dart_ed25519_pk_verify>();
+
   ffi.Pointer<ffi.Uint8> ed25519_sign(
     ffi.Pointer<Ed25519Keypair> keypair,
     ffi.Pointer<ffi.Uint8> data,
@@ -81,6 +121,19 @@ class Ffi {
       _lookup<ffi.NativeFunction<_c_ed25519_sign>>('ed25519_sign');
   late final _dart_ed25519_sign _ed25519_sign =
       _ed25519_sign_ptr.asFunction<_dart_ed25519_sign>();
+
+  void ed25519_free(
+    ffi.Pointer<Ed25519Keypair> keypair,
+  ) {
+    return _ed25519_free(
+      keypair,
+    );
+  }
+
+  late final _ed25519_free_ptr =
+      _lookup<ffi.NativeFunction<_c_ed25519_free>>('ed25519_free');
+  late final _dart_ed25519_free _ed25519_free =
+      _ed25519_free_ptr.asFunction<_dart_ed25519_free>();
 
   ffi.Pointer<ffi.Uint8> blake3_hash(
     ffi.Pointer<ffi.Uint8> data,
@@ -398,6 +451,12 @@ const int SIG_ATOMIC_MIN = -2147483648;
 
 const int SIG_ATOMIC_MAX = 2147483647;
 
+const int true_1 = 1;
+
+const int false_1 = 0;
+
+const int __bool_true_false_are_defined = 1;
+
 typedef _c_free_u8 = ffi.Void Function(
   ffi.Pointer<ffi.Uint8> data,
   ffi.Uint64 len,
@@ -428,6 +487,34 @@ typedef _dart_ed25519_from_seed = ffi.Pointer<Ed25519Keypair> Function(
   ffi.Pointer<ffi.Uint8> data,
 );
 
+typedef _c_ed25519_verify = ffi.Uint8 Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+  ffi.Pointer<ffi.Uint8> sign,
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_ed25519_verify = int Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+  ffi.Pointer<ffi.Uint8> sign,
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
+typedef _c_ed25519_pk_verify = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Uint8> pk,
+  ffi.Pointer<ffi.Uint8> sign,
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_ed25519_pk_verify = int Function(
+  ffi.Pointer<ffi.Uint8> pk,
+  ffi.Pointer<ffi.Uint8> sign,
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
 typedef _c_ed25519_sign = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Ed25519Keypair> keypair,
   ffi.Pointer<ffi.Uint8> data,
@@ -438,6 +525,14 @@ typedef _dart_ed25519_sign = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Ed25519Keypair> keypair,
   ffi.Pointer<ffi.Uint8> data,
   int len,
+);
+
+typedef _c_ed25519_free = ffi.Void Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
+);
+
+typedef _dart_ed25519_free = void Function(
+  ffi.Pointer<Ed25519Keypair> keypair,
 );
 
 typedef _c_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
