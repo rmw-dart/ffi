@@ -6,7 +6,7 @@ void main() {
   final seed = rand_u8_32();
   final ed25519 = Ed25519(seed);
   final pk = ed25519.pk();
-  print("seed $seed pk $pk");
+  print("pk $pk\nseed $seed ");
   while (true) {
     final data = utf8.encoder.convert("$n");
 
