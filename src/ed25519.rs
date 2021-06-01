@@ -1,4 +1,4 @@
-use crate::into::const_u8;
+use crate::const_u8::const_u8;
 use core::slice;
 use ed25519_dalek_blake3::{Keypair, PublicKey, SecretKey, Signature, Signer, Verifier};
 use rand::Rng;

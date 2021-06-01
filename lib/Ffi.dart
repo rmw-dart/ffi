@@ -17,32 +17,6 @@ class Ffi {
           lookup)
       : _lookup = lookup;
 
-  void free_u8(
-    ffi.Pointer<ffi.Uint8> data,
-    int len,
-  ) {
-    return _free_u8(
-      data,
-      len,
-    );
-  }
-
-  late final _free_u8_ptr = _lookup<ffi.NativeFunction<_c_free_u8>>('free_u8');
-  late final _dart_free_u8 _free_u8 = _free_u8_ptr.asFunction<_dart_free_u8>();
-
-  void free_u8_32(
-    ffi.Pointer<ffi.Uint8> data,
-  ) {
-    return _free_u8_32(
-      data,
-    );
-  }
-
-  late final _free_u8_32_ptr =
-      _lookup<ffi.NativeFunction<_c_free_u8_32>>('free_u8_32');
-  late final _dart_free_u8_32 _free_u8_32 =
-      _free_u8_32_ptr.asFunction<_dart_free_u8_32>();
-
   ffi.Pointer<ffi.Uint8> rand_u8_32() {
     return _rand_u8_32();
   }
@@ -215,6 +189,32 @@ class Ffi {
       _lookup<ffi.NativeFunction<_c_blake3_hasher_end>>('blake3_hasher_end');
   late final _dart_blake3_hasher_end _blake3_hasher_end =
       _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
+
+  void free_u8(
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _free_u8(
+      data,
+      len,
+    );
+  }
+
+  late final _free_u8_ptr = _lookup<ffi.NativeFunction<_c_free_u8>>('free_u8');
+  late final _dart_free_u8 _free_u8 = _free_u8_ptr.asFunction<_dart_free_u8>();
+
+  void free_u8_32(
+    ffi.Pointer<ffi.Uint8> data,
+  ) {
+    return _free_u8_32(
+      data,
+    );
+  }
+
+  late final _free_u8_32_ptr =
+      _lookup<ffi.NativeFunction<_c_free_u8_32>>('free_u8_32');
+  late final _dart_free_u8_32 _free_u8_32 =
+      _free_u8_32_ptr.asFunction<_dart_free_u8_32>();
 }
 
 class __darwin_pthread_handler_rec extends ffi.Struct {
@@ -483,24 +483,6 @@ const int false_1 = 0;
 
 const int __bool_true_false_are_defined = 1;
 
-typedef _c_free_u8 = ffi.Void Function(
-  ffi.Pointer<ffi.Uint8> data,
-  ffi.Uint64 len,
-);
-
-typedef _dart_free_u8 = void Function(
-  ffi.Pointer<ffi.Uint8> data,
-  int len,
-);
-
-typedef _c_free_u8_32 = ffi.Void Function(
-  ffi.Pointer<ffi.Uint8> data,
-);
-
-typedef _dart_free_u8_32 = void Function(
-  ffi.Pointer<ffi.Uint8> data,
-);
-
 typedef _c_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
 
 typedef _dart_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
@@ -609,6 +591,24 @@ typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
 
 typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Blake3Hasher> hasher,
+);
+
+typedef _c_free_u8 = ffi.Void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_free_u8 = void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
+typedef _c_free_u8_32 = ffi.Void Function(
+  ffi.Pointer<ffi.Uint8> data,
+);
+
+typedef _dart_free_u8_32 = void Function(
+  ffi.Pointer<ffi.Uint8> data,
 );
 
 typedef _typedefC_1 = ffi.Void Function(
