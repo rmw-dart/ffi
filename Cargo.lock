@@ -123,9 +123,9 @@ dependencies = [
 
 [[package]]
 name = "ed25519-dalek-blake3"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b195defee314b14b7a15178dbb01f8113798faf6f302eedd1aec4d0ab96ea44e"
+checksum = "9bfc81313997dabe155858970761390dcf7b866be3a83804b7794f096851cd22"
 dependencies = [
  "blake3",
  "curve25519-dalek",

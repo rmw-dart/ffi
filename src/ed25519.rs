@@ -3,6 +3,7 @@ use core::slice;
 use ed25519_dalek_blake3::{Keypair, PublicKey, SecretKey, Signature, Signer, Verifier};
 use rand::Rng;
 use safer_ffi::prelude::*;
+use x25519_dalek::PublicKey as X25519PublicKey;
 /*
 use rand::rngs::OsRng;
 
@@ -56,6 +57,12 @@ pub fn ed25519_verify(
 #[ffi_export]
 pub fn ed25519_sk(keypair: &mut Ed25519Keypair) -> *const u8 {
   const_u8(*keypair.key.secret.as_bytes())
+}
+
+#[ffi_export]
+pub fn ed25519_x25519_pk(keypair: &mut Ed25519Keypair) -> *const u8 {
+  let pk = keypair.key.public.1.to_montgomery().as_bytes();
+  const_u8(*X25519PublicKey::from(*pk).as_bytes())
 }
 
 #[ffi_export]
