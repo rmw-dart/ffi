@@ -43,6 +43,12 @@ pub fn ed25519_from_seed(data: *const u8) -> repr_c::Box<Ed25519Keypair> {
     key: Keypair::from_bytes(&skv as &[u8]).unwrap(),
   })
 }
+
+#[ffi_export]
+pub fn ed25519_pk(keypair: &mut Ed25519Keypair) -> *const u8 {
+  Box::into_raw(Box::new(keypair.key.public.as_bytes())) as *const u8
+}
+
 #[ffi_export]
 pub fn ed25519_verify(
   keypair: &mut Ed25519Keypair,
