@@ -190,6 +190,20 @@ class Ffi {
   late final _dart_blake3_hasher_end _blake3_hasher_end =
       _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
 
+  ffi.Pointer<X25519Secret> x25519_sk_from_bytes(
+    ffi.Pointer<ffi.Uint8> seed,
+  ) {
+    return _x25519_sk_from_bytes(
+      seed,
+    );
+  }
+
+  late final _x25519_sk_from_bytes_ptr =
+      _lookup<ffi.NativeFunction<_c_x25519_sk_from_bytes>>(
+          'x25519_sk_from_bytes');
+  late final _dart_x25519_sk_from_bytes _x25519_sk_from_bytes =
+      _x25519_sk_from_bytes_ptr.asFunction<_dart_x25519_sk_from_bytes>();
+
   void free_u8(
     ffi.Pointer<ffi.Uint8> data,
     int len,
@@ -302,6 +316,8 @@ class _opaque_pthread_t extends ffi.Struct {
 class Ed25519Keypair extends ffi.Opaque {}
 
 class Blake3Hasher extends ffi.Opaque {}
+
+class X25519Secret extends ffi.Opaque {}
 
 const int __DARWIN_ONLY_64_BIT_INO_T = 0;
 
@@ -591,6 +607,14 @@ typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
 
 typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Blake3Hasher> hasher,
+);
+
+typedef _c_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
+  ffi.Pointer<ffi.Uint8> seed,
+);
+
+typedef _dart_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
+  ffi.Pointer<ffi.Uint8> seed,
 );
 
 typedef _c_free_u8 = ffi.Void Function(

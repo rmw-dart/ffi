@@ -70,6 +70,11 @@ void blake3_hasher_update (
 uint8_t const * blake3_hasher_end (
     Blake3Hasher_t * hasher);
 
+typedef struct X25519Secret X25519Secret_t;
+
+X25519Secret_t * x25519_sk_from_bytes (
+    uint8_t const * seed);
+
 void free_u8 (
     uint8_t * data,
     size_t len);
