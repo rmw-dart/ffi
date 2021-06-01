@@ -58,6 +58,11 @@ pub fn ed25519_sign(keypair: &mut Ed25519Keypair, data: *const u8, len: usize) -
   Box::into_raw(Box::new(keypair.key.sign(msg).to_bytes())) as *const u8
 }
 
+#[ffi_export]
+pub fn ed25519_free(keypair: repr_c::Box<Ed25519Keypair>) {
+  drop(keypair)
+}
+
 /*
 keypair(seed)
 sign
