@@ -66,6 +66,7 @@ pub fn ed25519_pk_x25519_pk(pk: *const u8) -> *const u8 {
   _x25519_pk(&pk)
 }
 
+#[inline]
 pub fn _x25519_pk(pk: &PublicKey) -> *const u8 {
   const_u8(*X25519PublicKey::from(*pk.as_bytes()).as_bytes())
 }
