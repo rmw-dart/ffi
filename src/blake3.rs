@@ -1,3 +1,4 @@
+use crate::into::const_u8;
 use blake3::Hasher;
 use core::slice;
 // use dart_sdk_sys::{Dart_Handle, Dart_NewFinalizableHandle};
@@ -35,9 +36,7 @@ pub fn blake3_hasher_update(hasher: &mut Blake3Hasher, data: *const u8, len: usi
 
 #[ffi_export]
 pub fn blake3_hasher_end(hasher: repr_c::Box<Blake3Hasher>) -> *const u8 {
-  let h = Box::new(*hasher.h.finalize().as_bytes());
-  drop(hasher);
-  Box::into_raw(h) as *const u8
+  return const_u8(*hasher.h.finalize().as_bytes());
 }
 
 /*

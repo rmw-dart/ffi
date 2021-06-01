@@ -1,8 +1,8 @@
+use crate::into::const_u8;
 use core::slice;
 use ed25519_dalek_blake3::{Keypair, PublicKey, SecretKey, Signature, Signer, Verifier};
 use rand::Rng;
 use safer_ffi::prelude::*;
-
 /*
 use rand::rngs::OsRng;
 
@@ -28,8 +28,7 @@ https://docs.rs/dart-sdk-sys/2.12.4/dart_sdk_sys/fn.Dart_NewFinalizableHandle.ht
 
 #[ffi_export]
 pub fn rand_u8_32() -> *const u8 {
-  let b = Box::new(rand::thread_rng().gen::<[u8; 32]>());
-  Box::into_raw(b) as *const u8
+  const_u8(rand::thread_rng().gen::<[u8; 32]>())
 }
 
 #[ffi_export]
@@ -56,7 +55,7 @@ pub fn ed25519_verify(
 
 #[ffi_export]
 pub fn ed25519_pk(keypair: &mut Ed25519Keypair) -> *const u8 {
-  Box::into_raw(Box::new(keypair.key.public.to_bytes())) as *const u8
+  const_u8(*keypair.key.public.as_bytes())
 }
 
 #[ffi_export]
@@ -77,7 +76,7 @@ pub fn _verify(pk: PublicKey, sign: *const u8, data: *const u8, len: usize) -> b
 #[ffi_export]
 pub fn ed25519_sign(keypair: &mut Ed25519Keypair, data: *const u8, len: usize) -> *const u8 {
   let msg = unsafe { slice::from_raw_parts(data, len) };
-  Box::into_raw(Box::new(keypair.key.sign(msg).to_bytes())) as *const u8
+  const_u8(keypair.key.sign(msg).to_bytes())
 }
 
 #[ffi_export]

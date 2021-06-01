@@ -1,5 +1,7 @@
 mod blake3;
 mod ed25519;
+mod into;
+
 use safer_ffi::prelude::*;
 
 #[ffi_export]
