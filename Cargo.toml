@@ -10,9 +10,9 @@ license = "AGPL-3.0-or-later"
 description="placeholder ; writing"
 
 [dependencies]
-blake3 = "0.3.8"
-ed25519-dalek-blake3 = "1.0.3"
-rand = "0.8.3"
+blake3 = "1.0.0"
+ed25519-dalek-blake3 = "1.0.4"
+rand = "0.8.4"
 safer-ffi = { version = "0.0.6", features = ["proc_macros"] }
 x25519-dalek = "1.1.1"
 
