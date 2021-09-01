@@ -1,10 +1,10 @@
-#cargo-features = ["edition2021"]
+cargo-features = ["edition2021"]
 
 [package]
 name = "dart-ffi"
 authors = [ "rmw <i@rmw.link>" ]
-#edition = "2021"
-edition = "2018"
+edition = "2021"
+#edition = "2018"
 version = "0.0.1"
 license = "AGPL-3.0-or-later"
 description="placeholder ; writing"
