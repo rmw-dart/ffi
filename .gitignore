@@ -4,3 +4,4 @@ target/
 dist/
 /ffi.so
 *.exe
+node_modules/
