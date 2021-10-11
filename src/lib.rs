@@ -1,5 +1,6 @@
 mod blake3;
 mod const_u8;
+mod dart;
 mod ed25519;
 mod x25519;
 

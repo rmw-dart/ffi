@@ -18,29 +18,6 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-uint8_t const * blake3_hash (
-    uint8_t const * data,
-    size_t len);
-
-typedef struct Blake3Hasher Blake3Hasher_t;
-
-Blake3Hasher_t * blake3_hasher_new (void);
-
-void blake3_hasher_update (
-    Blake3Hasher_t * hasher,
-    uint8_t const * data,
-    size_t len);
-
-uint8_t const * blake3_hasher_end (
-    Blake3Hasher_t * hasher);
-
-void free_u8 (
-    uint8_t * data,
-    size_t len);
-
-void free_u8_32 (
-    uint8_t * data);
-
 uint8_t const * rand_u8_32 (void);
 
 typedef struct Ed25519Keypair Ed25519Keypair_t;
@@ -82,6 +59,33 @@ uint8_t const * ed25519_sign (
 
 void ed25519_free (
     Ed25519Keypair_t * keypair);
+
+uint8_t const * blake3_hash (
+    uint8_t const * data,
+    size_t len);
+
+typedef struct Blake3Hasher Blake3Hasher_t;
+
+Blake3Hasher_t * blake3_hasher_new (void);
+
+void blake3_hasher_update (
+    Blake3Hasher_t * hasher,
+    uint8_t const * data,
+    size_t len);
+
+uint8_t const * blake3_hasher_end (
+    Blake3Hasher_t * hasher);
+
+void blake3_hasher_gc (
+    void * object,
+    void * peer);
+
+void free_u8 (
+    uint8_t * data,
+    size_t len);
+
+void free_u8_32 (
+    uint8_t * data);
 
 typedef struct X25519Secret X25519Secret_t;
 

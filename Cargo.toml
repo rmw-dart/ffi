@@ -11,9 +11,12 @@ description="placeholder ; writing"
 
 [dependencies]
 blake3 = "1.0.0"
+dart-sdk-sys = "2.14.3"
 ed25519-dalek-blake3 = "1.0.4"
+libc = "0.2.103"
 rand = "0.8.4"
 safer-ffi = { version = "0.0.6", features = ["proc_macros"] }
+static_init = "1.0.1"
 x25519-dalek = "1.1.1"
 
 [lib]
@@ -21,4 +24,7 @@ crate-type = ["cdylib","staticlib"]
 
 [features]
 c-headers = ["safer-ffi/headers"]
+
+[build-dependencies]
+cc = "1.0.71"
 
