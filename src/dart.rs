@@ -1,4 +1,4 @@
-use dart_sdk_sys::{
+use crate::dart_sdk::{
   Dart_FinalizableHandle, Dart_Handle, Dart_HandleFinalizer, Dart_PersistentHandle,
 };
 
@@ -17,4 +17,16 @@ extern "C" {
     external_allocation_size: usize,
     callback: Dart_HandleFinalizer,
   ) -> Dart_FinalizableHandle;
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn InitDartApiDL(obj: *mut libc::c_void) -> libc::intptr_t {
+  return Dart_InitializeApiDL(obj);
+}
+
+static mut closures_caller: Option<extern "C" fn(c: Dart_Handle)> = None;
+
+#[no_mangle]
+pub unsafe extern "C" fn RegisterClosureCallerFP(callback_: extern "C" fn(c: Dart_Handle)) {
+  closures_caller = Some(callback_);
 }

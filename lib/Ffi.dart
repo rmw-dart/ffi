@@ -17,6 +17,133 @@ class Ffi {
           lookup)
       : _lookup = lookup;
 
+  ffi.Pointer<X25519Secret> x25519_sk_from_bytes(
+    ffi.Pointer<ffi.Uint8> seed,
+  ) {
+    return _x25519_sk_from_bytes(
+      seed,
+    );
+  }
+
+  late final _x25519_sk_from_bytes_ptr =
+      _lookup<ffi.NativeFunction<_c_x25519_sk_from_bytes>>(
+          'x25519_sk_from_bytes');
+  late final _dart_x25519_sk_from_bytes _x25519_sk_from_bytes =
+      _x25519_sk_from_bytes_ptr.asFunction<_dart_x25519_sk_from_bytes>();
+
+  ffi.Pointer<ffi.Uint8> x25519_sk_diffie_hellman(
+    ffi.Pointer<X25519Secret> secret,
+    ffi.Pointer<ffi.Uint8> pk,
+  ) {
+    return _x25519_sk_diffie_hellman(
+      secret,
+      pk,
+    );
+  }
+
+  late final _x25519_sk_diffie_hellman_ptr =
+      _lookup<ffi.NativeFunction<_c_x25519_sk_diffie_hellman>>(
+          'x25519_sk_diffie_hellman');
+  late final _dart_x25519_sk_diffie_hellman _x25519_sk_diffie_hellman =
+      _x25519_sk_diffie_hellman_ptr
+          .asFunction<_dart_x25519_sk_diffie_hellman>();
+
+  void free_u8(
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _free_u8(
+      data,
+      len,
+    );
+  }
+
+  late final _free_u8_ptr = _lookup<ffi.NativeFunction<_c_free_u8>>('free_u8');
+  late final _dart_free_u8 _free_u8 = _free_u8_ptr.asFunction<_dart_free_u8>();
+
+  void free_u8_32(
+    ffi.Pointer<ffi.Uint8> data,
+  ) {
+    return _free_u8_32(
+      data,
+    );
+  }
+
+  late final _free_u8_32_ptr =
+      _lookup<ffi.NativeFunction<_c_free_u8_32>>('free_u8_32');
+  late final _dart_free_u8_32 _free_u8_32 =
+      _free_u8_32_ptr.asFunction<_dart_free_u8_32>();
+
+  ffi.Pointer<ffi.Uint8> blake3_hash(
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _blake3_hash(
+      data,
+      len,
+    );
+  }
+
+  late final _blake3_hash_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_hash>>('blake3_hash');
+  late final _dart_blake3_hash _blake3_hash =
+      _blake3_hash_ptr.asFunction<_dart_blake3_hash>();
+
+  ffi.Pointer<Blake3Hasher> blake3_hasher_new() {
+    return _blake3_hasher_new();
+  }
+
+  late final _blake3_hasher_new_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_hasher_new>>('blake3_hasher_new');
+  late final _dart_blake3_hasher_new _blake3_hasher_new =
+      _blake3_hasher_new_ptr.asFunction<_dart_blake3_hasher_new>();
+
+  void blake3_hasher_update(
+    ffi.Pointer<Blake3Hasher> hasher,
+    ffi.Pointer<ffi.Uint8> data,
+    int len,
+  ) {
+    return _blake3_hasher_update(
+      hasher,
+      data,
+      len,
+    );
+  }
+
+  late final _blake3_hasher_update_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_hasher_update>>(
+          'blake3_hasher_update');
+  late final _dart_blake3_hasher_update _blake3_hasher_update =
+      _blake3_hasher_update_ptr.asFunction<_dart_blake3_hasher_update>();
+
+  ffi.Pointer<ffi.Uint8> blake3_hasher_end(
+    ffi.Pointer<Blake3Hasher> hasher,
+  ) {
+    return _blake3_hasher_end(
+      hasher,
+    );
+  }
+
+  late final _blake3_hasher_end_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_hasher_end>>('blake3_hasher_end');
+  late final _dart_blake3_hasher_end _blake3_hasher_end =
+      _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
+
+  void blake3_hasher_gc(
+    Object object,
+    ffi.Pointer<Blake3Hasher> peer,
+  ) {
+    return _blake3_hasher_gc(
+      object,
+      peer,
+    );
+  }
+
+  late final _blake3_hasher_gc_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_hasher_gc>>('blake3_hasher_gc');
+  late final _dart_blake3_hasher_gc _blake3_hasher_gc =
+      _blake3_hasher_gc_ptr.asFunction<_dart_blake3_hasher_gc>();
+
   ffi.Pointer<ffi.Uint8> rand_u8_32() {
     return _rand_u8_32();
   }
@@ -161,133 +288,6 @@ class Ffi {
       _lookup<ffi.NativeFunction<_c_ed25519_free>>('ed25519_free');
   late final _dart_ed25519_free _ed25519_free =
       _ed25519_free_ptr.asFunction<_dart_ed25519_free>();
-
-  ffi.Pointer<ffi.Uint8> blake3_hash(
-    ffi.Pointer<ffi.Uint8> data,
-    int len,
-  ) {
-    return _blake3_hash(
-      data,
-      len,
-    );
-  }
-
-  late final _blake3_hash_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hash>>('blake3_hash');
-  late final _dart_blake3_hash _blake3_hash =
-      _blake3_hash_ptr.asFunction<_dart_blake3_hash>();
-
-  ffi.Pointer<Blake3Hasher> blake3_hasher_new() {
-    return _blake3_hasher_new();
-  }
-
-  late final _blake3_hasher_new_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hasher_new>>('blake3_hasher_new');
-  late final _dart_blake3_hasher_new _blake3_hasher_new =
-      _blake3_hasher_new_ptr.asFunction<_dart_blake3_hasher_new>();
-
-  void blake3_hasher_update(
-    ffi.Pointer<Blake3Hasher> hasher,
-    ffi.Pointer<ffi.Uint8> data,
-    int len,
-  ) {
-    return _blake3_hasher_update(
-      hasher,
-      data,
-      len,
-    );
-  }
-
-  late final _blake3_hasher_update_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hasher_update>>(
-          'blake3_hasher_update');
-  late final _dart_blake3_hasher_update _blake3_hasher_update =
-      _blake3_hasher_update_ptr.asFunction<_dart_blake3_hasher_update>();
-
-  ffi.Pointer<ffi.Uint8> blake3_hasher_end(
-    ffi.Pointer<Blake3Hasher> hasher,
-  ) {
-    return _blake3_hasher_end(
-      hasher,
-    );
-  }
-
-  late final _blake3_hasher_end_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hasher_end>>('blake3_hasher_end');
-  late final _dart_blake3_hasher_end _blake3_hasher_end =
-      _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
-
-  void blake3_hasher_gc(
-    ffi.Pointer<ffi.Void> object,
-    ffi.Pointer<ffi.Void> peer,
-  ) {
-    return _blake3_hasher_gc(
-      object,
-      peer,
-    );
-  }
-
-  late final _blake3_hasher_gc_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hasher_gc>>('blake3_hasher_gc');
-  late final _dart_blake3_hasher_gc _blake3_hasher_gc =
-      _blake3_hasher_gc_ptr.asFunction<_dart_blake3_hasher_gc>();
-
-  void free_u8(
-    ffi.Pointer<ffi.Uint8> data,
-    int len,
-  ) {
-    return _free_u8(
-      data,
-      len,
-    );
-  }
-
-  late final _free_u8_ptr = _lookup<ffi.NativeFunction<_c_free_u8>>('free_u8');
-  late final _dart_free_u8 _free_u8 = _free_u8_ptr.asFunction<_dart_free_u8>();
-
-  void free_u8_32(
-    ffi.Pointer<ffi.Uint8> data,
-  ) {
-    return _free_u8_32(
-      data,
-    );
-  }
-
-  late final _free_u8_32_ptr =
-      _lookup<ffi.NativeFunction<_c_free_u8_32>>('free_u8_32');
-  late final _dart_free_u8_32 _free_u8_32 =
-      _free_u8_32_ptr.asFunction<_dart_free_u8_32>();
-
-  ffi.Pointer<X25519Secret> x25519_sk_from_bytes(
-    ffi.Pointer<ffi.Uint8> seed,
-  ) {
-    return _x25519_sk_from_bytes(
-      seed,
-    );
-  }
-
-  late final _x25519_sk_from_bytes_ptr =
-      _lookup<ffi.NativeFunction<_c_x25519_sk_from_bytes>>(
-          'x25519_sk_from_bytes');
-  late final _dart_x25519_sk_from_bytes _x25519_sk_from_bytes =
-      _x25519_sk_from_bytes_ptr.asFunction<_dart_x25519_sk_from_bytes>();
-
-  ffi.Pointer<ffi.Uint8> x25519_sk_diffie_hellman(
-    ffi.Pointer<X25519Secret> secret,
-    ffi.Pointer<ffi.Uint8> pk,
-  ) {
-    return _x25519_sk_diffie_hellman(
-      secret,
-      pk,
-    );
-  }
-
-  late final _x25519_sk_diffie_hellman_ptr =
-      _lookup<ffi.NativeFunction<_c_x25519_sk_diffie_hellman>>(
-          'x25519_sk_diffie_hellman');
-  late final _dart_x25519_sk_diffie_hellman _x25519_sk_diffie_hellman =
-      _x25519_sk_diffie_hellman_ptr
-          .asFunction<_dart_x25519_sk_diffie_hellman>();
 }
 
 class __mbstate_t extends ffi.Union {
@@ -380,11 +380,13 @@ class _opaque_pthread_t extends ffi.Struct {
   external ffi.Array<ffi.Int8> __opaque;
 }
 
-class Ed25519Keypair extends ffi.Opaque {}
+class X25519Secret extends ffi.Opaque {}
 
 class Blake3Hasher extends ffi.Opaque {}
 
-class X25519Secret extends ffi.Opaque {}
+class _Dart_Handle extends ffi.Opaque {}
+
+class Ed25519Keypair extends ffi.Opaque {}
 
 const int __DARWIN_ONLY_64_BIT_INO_T = 0;
 
@@ -566,6 +568,86 @@ const int false_1 = 0;
 
 const int __bool_true_false_are_defined = 1;
 
+typedef _c_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
+  ffi.Pointer<ffi.Uint8> seed,
+);
+
+typedef _dart_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
+  ffi.Pointer<ffi.Uint8> seed,
+);
+
+typedef _c_x25519_sk_diffie_hellman = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<X25519Secret> secret,
+  ffi.Pointer<ffi.Uint8> pk,
+);
+
+typedef _dart_x25519_sk_diffie_hellman = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<X25519Secret> secret,
+  ffi.Pointer<ffi.Uint8> pk,
+);
+
+typedef _c_free_u8 = ffi.Void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_free_u8 = void Function(
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
+typedef _c_free_u8_32 = ffi.Void Function(
+  ffi.Pointer<ffi.Uint8> data,
+);
+
+typedef _dart_free_u8_32 = void Function(
+  ffi.Pointer<ffi.Uint8> data,
+);
+
+typedef _c_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
+typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+
+typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+
+typedef _c_blake3_hasher_update = ffi.Void Function(
+  ffi.Pointer<Blake3Hasher> hasher,
+  ffi.Pointer<ffi.Uint8> data,
+  ffi.Uint64 len,
+);
+
+typedef _dart_blake3_hasher_update = void Function(
+  ffi.Pointer<Blake3Hasher> hasher,
+  ffi.Pointer<ffi.Uint8> data,
+  int len,
+);
+
+typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<Blake3Hasher> hasher,
+);
+
+typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
+  ffi.Pointer<Blake3Hasher> hasher,
+);
+
+typedef _c_blake3_hasher_gc = ffi.Void Function(
+  ffi.Handle object,
+  ffi.Pointer<Blake3Hasher> peer,
+);
+
+typedef _dart_blake3_hasher_gc = void Function(
+  Object object,
+  ffi.Pointer<Blake3Hasher> peer,
+);
+
 typedef _c_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
 
 typedef _dart_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
@@ -656,86 +738,6 @@ typedef _c_ed25519_free = ffi.Void Function(
 
 typedef _dart_ed25519_free = void Function(
   ffi.Pointer<Ed25519Keypair> keypair,
-);
-
-typedef _c_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<ffi.Uint8> data,
-  ffi.Uint64 len,
-);
-
-typedef _dart_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<ffi.Uint8> data,
-  int len,
-);
-
-typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
-
-typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
-
-typedef _c_blake3_hasher_update = ffi.Void Function(
-  ffi.Pointer<Blake3Hasher> hasher,
-  ffi.Pointer<ffi.Uint8> data,
-  ffi.Uint64 len,
-);
-
-typedef _dart_blake3_hasher_update = void Function(
-  ffi.Pointer<Blake3Hasher> hasher,
-  ffi.Pointer<ffi.Uint8> data,
-  int len,
-);
-
-typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<Blake3Hasher> hasher,
-);
-
-typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<Blake3Hasher> hasher,
-);
-
-typedef _c_blake3_hasher_gc = ffi.Void Function(
-  ffi.Pointer<ffi.Void> object,
-  ffi.Pointer<ffi.Void> peer,
-);
-
-typedef _dart_blake3_hasher_gc = void Function(
-  ffi.Pointer<ffi.Void> object,
-  ffi.Pointer<ffi.Void> peer,
-);
-
-typedef _c_free_u8 = ffi.Void Function(
-  ffi.Pointer<ffi.Uint8> data,
-  ffi.Uint64 len,
-);
-
-typedef _dart_free_u8 = void Function(
-  ffi.Pointer<ffi.Uint8> data,
-  int len,
-);
-
-typedef _c_free_u8_32 = ffi.Void Function(
-  ffi.Pointer<ffi.Uint8> data,
-);
-
-typedef _dart_free_u8_32 = void Function(
-  ffi.Pointer<ffi.Uint8> data,
-);
-
-typedef _c_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
-  ffi.Pointer<ffi.Uint8> seed,
-);
-
-typedef _dart_x25519_sk_from_bytes = ffi.Pointer<X25519Secret> Function(
-  ffi.Pointer<ffi.Uint8> seed,
-);
-
-typedef _c_x25519_sk_diffie_hellman = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<X25519Secret> secret,
-  ffi.Pointer<ffi.Uint8> pk,
-);
-
-typedef _dart_x25519_sk_diffie_hellman = ffi.Pointer<ffi.Uint8> Function(
-  ffi.Pointer<X25519Secret> secret,
-  ffi.Pointer<ffi.Uint8> pk,
 );
 
 typedef _typedefC_1 = ffi.Void Function(

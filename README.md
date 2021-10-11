@@ -12,9 +12,18 @@
 
 ```dart
 import 'dart:convert' show utf8, base64;
-import './lib/rmw.dart' show hash, Hasher, rand_u8_32, Ed25519, ed25519_verify;
+import './lib/rmw.dart'
+show init, hash, Hasher, rand_u8_32, Ed25519, ed25519_verify;
 
 void main() {
+  init();
+  while (true) {
+    final seed = rand_u8_32();
+    final hasher = Hasher();
+    hasher.update(seed);
+    print(hasher.end());
+  }
+  return;
   var n = 0;
   final seed = rand_u8_32();
   final ed25519 = Ed25519(seed);

@@ -1,9 +1,8 @@
 use crate::const_u8::const_u8;
 use crate::dart::Dart_NewFinalizableHandle_DL_Trampolined;
+use crate::dart_sdk::Dart_Handle;
 use blake3::Hasher;
-use core::ffi::c_void;
 use core::slice;
-use dart_sdk_sys::Dart_Handle;
 use safer_ffi::prelude::*;
 use static_init::dynamic;
 use std::mem::size_of;
@@ -43,28 +42,19 @@ pub fn blake3_hasher_end(hasher: repr_c::Box<Blake3Hasher>) -> *const u8 {
   return const_u8(*hasher.h.finalize().as_bytes());
 }
 
-/*
-
-fn _blake3_hasher_gc(isolate_callback_data: *mut c_void, peer: *mut c_void) {
-  drop(peer);
-}
-
-#[ffi_export]
-pub fn blake3_hasher_gc(object: Dart_Handle, peer: *mut c_void) {
-  Dart_NewFinalizableHandle(object, peer, 0, _blake3_hasher_gc)
-}
-*/
-
 #[dynamic]
 static SIZE: usize = size_of::<Blake3Hasher>();
 
-pub extern "C" fn blake3_hasher_gced(isolate_callback_data: *mut c_void, peer: *mut c_void) {
-  drop(peer);
+pub extern "C" fn blake3_hasher_gced(
+  isolate_callback_data: *mut libc::c_void,
+  peer: *mut libc::c_void,
+) {
+  //unsafe { slice::from_raw_parts(peer, *SIZE) };
 }
 
 #[ffi_export]
-pub fn blake3_hasher_gc(object: *mut c_void, peer: *mut c_void) {
-  let object = object as Dart_Handle;
+pub fn blake3_hasher_gc(object: Dart_Handle, peer: *mut Blake3Hasher) {
+  let peer = peer as *mut libc::c_void;
   unsafe {
     Dart_NewFinalizableHandle_DL_Trampolined(object, peer, *SIZE, Some(blake3_hasher_gced))
   };

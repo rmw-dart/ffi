@@ -1,6 +1,6 @@
 import './Ffi.dart' as Ffi;
 import 'dart:typed_data' show Uint8List;
-import './So.dart' show So, Uint8ListPointer;
+import './So.dart' show So, Uint8ListPointer, dylib;
 import 'dart:ffi' show Uint8Pointer, Pointer;
 import 'package:ffi/ffi.dart' show calloc;
 
@@ -17,6 +17,7 @@ class Hasher {
   late Pointer<Ffi.Blake3Hasher> hasher;
   Hasher() {
     this.hasher = So.blake3_hasher_new();
+    So.blake3_hasher_gc(this, this.hasher);
   }
   void update(Uint8List data) {
     final ptr = data.ptr();

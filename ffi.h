@@ -18,6 +18,44 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+typedef struct X25519Secret X25519Secret_t;
+
+X25519Secret_t * x25519_sk_from_bytes (
+    uint8_t const * seed);
+
+uint8_t const * x25519_sk_diffie_hellman (
+    X25519Secret_t * secret,
+    uint8_t const * pk);
+
+void free_u8 (
+    uint8_t * data,
+    size_t len);
+
+void free_u8_32 (
+    uint8_t * data);
+
+uint8_t const * blake3_hash (
+    uint8_t const * data,
+    size_t len);
+
+typedef struct Blake3Hasher Blake3Hasher_t;
+
+Blake3Hasher_t * blake3_hasher_new (void);
+
+void blake3_hasher_update (
+    Blake3Hasher_t * hasher,
+    uint8_t const * data,
+    size_t len);
+
+uint8_t const * blake3_hasher_end (
+    Blake3Hasher_t * hasher);
+
+typedef struct _Dart_Handle _Dart_Handle_t;
+
+void blake3_hasher_gc (
+    _Dart_Handle_t * object,
+    Blake3Hasher_t * peer);
+
 uint8_t const * rand_u8_32 (void);
 
 typedef struct Ed25519Keypair Ed25519Keypair_t;
@@ -59,42 +97,6 @@ uint8_t const * ed25519_sign (
 
 void ed25519_free (
     Ed25519Keypair_t * keypair);
-
-uint8_t const * blake3_hash (
-    uint8_t const * data,
-    size_t len);
-
-typedef struct Blake3Hasher Blake3Hasher_t;
-
-Blake3Hasher_t * blake3_hasher_new (void);
-
-void blake3_hasher_update (
-    Blake3Hasher_t * hasher,
-    uint8_t const * data,
-    size_t len);
-
-uint8_t const * blake3_hasher_end (
-    Blake3Hasher_t * hasher);
-
-void blake3_hasher_gc (
-    void * object,
-    void * peer);
-
-void free_u8 (
-    uint8_t * data,
-    size_t len);
-
-void free_u8_32 (
-    uint8_t * data);
-
-typedef struct X25519Secret X25519Secret_t;
-
-X25519Secret_t * x25519_sk_from_bytes (
-    uint8_t const * seed);
-
-uint8_t const * x25519_sk_diffie_hellman (
-    X25519Secret_t * secret,
-    uint8_t const * pk);
 
 
 #ifdef __cplusplus
