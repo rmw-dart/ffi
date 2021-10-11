@@ -290,6 +290,14 @@ class Ffi {
           .asFunction<_dart_x25519_sk_diffie_hellman>();
 }
 
+class __mbstate_t extends ffi.Union {
+  @ffi.Array.multi([128])
+  external ffi.Array<ffi.Int8> __mbstate8;
+
+  @ffi.Int64()
+  external int _mbstateL;
+}
+
 class __darwin_pthread_handler_rec extends ffi.Struct {
   external ffi.Pointer<ffi.NativeFunction<_typedefC_1>> __routine;
 
