@@ -38,9 +38,12 @@ uint8_t const * blake3_hash (
     uint8_t const * data,
     size_t len);
 
+typedef struct _Dart_Handle _Dart_Handle_t;
+
 typedef struct Blake3Hasher Blake3Hasher_t;
 
-Blake3Hasher_t * blake3_hasher_new (void);
+Blake3Hasher_t * blake3_hasher_new (
+    _Dart_Handle_t * object);
 
 void blake3_hasher_update (
     Blake3Hasher_t * hasher,
@@ -49,12 +52,6 @@ void blake3_hasher_update (
 
 uint8_t const * blake3_hasher_end (
     Blake3Hasher_t * hasher);
-
-typedef struct _Dart_Handle _Dart_Handle_t;
-
-void blake3_hasher_gc (
-    _Dart_Handle_t * object,
-    Blake3Hasher_t * peer);
 
 uint8_t const * rand_u8_32 (void);
 

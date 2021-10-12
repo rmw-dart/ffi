@@ -22,6 +22,7 @@ pub type Dart_IsolateGroup = *mut _Dart_IsolateGroup;
 
 #[derive_ReprC]
 #[ReprC::opaque]
+#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _Dart_Handle {
   _unused: [u8; 0],

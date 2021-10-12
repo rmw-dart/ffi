@@ -89,8 +89,12 @@ class Ffi {
   late final _dart_blake3_hash _blake3_hash =
       _blake3_hash_ptr.asFunction<_dart_blake3_hash>();
 
-  ffi.Pointer<Blake3Hasher> blake3_hasher_new() {
-    return _blake3_hasher_new();
+  ffi.Pointer<Blake3Hasher> blake3_hasher_new(
+    Object object,
+  ) {
+    return _blake3_hasher_new(
+      object,
+    );
   }
 
   late final _blake3_hasher_new_ptr =
@@ -128,21 +132,6 @@ class Ffi {
       _lookup<ffi.NativeFunction<_c_blake3_hasher_end>>('blake3_hasher_end');
   late final _dart_blake3_hasher_end _blake3_hasher_end =
       _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
-
-  void blake3_hasher_gc(
-    Object object,
-    ffi.Pointer<Blake3Hasher> peer,
-  ) {
-    return _blake3_hasher_gc(
-      object,
-      peer,
-    );
-  }
-
-  late final _blake3_hasher_gc_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_hasher_gc>>('blake3_hasher_gc');
-  late final _dart_blake3_hasher_gc _blake3_hasher_gc =
-      _blake3_hasher_gc_ptr.asFunction<_dart_blake3_hasher_gc>();
 
   ffi.Pointer<ffi.Uint8> rand_u8_32() {
     return _rand_u8_32();
@@ -382,9 +371,9 @@ class _opaque_pthread_t extends ffi.Struct {
 
 class X25519Secret extends ffi.Opaque {}
 
-class Blake3Hasher extends ffi.Opaque {}
-
 class _Dart_Handle extends ffi.Opaque {}
+
+class Blake3Hasher extends ffi.Opaque {}
 
 class Ed25519Keypair extends ffi.Opaque {}
 
@@ -614,9 +603,13 @@ typedef _dart_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
   int len,
 );
 
-typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function(
+  ffi.Handle object,
+);
 
-typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function(
+  Object object,
+);
 
 typedef _c_blake3_hasher_update = ffi.Void Function(
   ffi.Pointer<Blake3Hasher> hasher,
@@ -636,16 +629,6 @@ typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
 
 typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Blake3Hasher> hasher,
-);
-
-typedef _c_blake3_hasher_gc = ffi.Void Function(
-  ffi.Handle object,
-  ffi.Pointer<Blake3Hasher> peer,
-);
-
-typedef _dart_blake3_hasher_gc = void Function(
-  Object object,
-  ffi.Pointer<Blake3Hasher> peer,
 );
 
 typedef _c_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
