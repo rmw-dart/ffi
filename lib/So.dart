@@ -13,13 +13,14 @@ void doClosureCallback(void Function() callback) {
   callback();
 }
 
+final So = Ffi(dylib);
+
 void init() {
   final init_api = dylib.lookupFunction<IntPtr Function(Pointer<Void>),
-  int Function(Pointer<Void>)>("InitDartApiDL");
+      int Function(Pointer<Void>)>("InitDartApiDL");
+
   assert(0 == init_api(NativeApi.initializeApiDLData));
 }
-
-final So = Ffi(dylib);
 
 extension Uint8ListPointer on Uint8List {
   // https://github.com/dart-lang/ffi/issues/31
