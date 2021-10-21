@@ -12,7 +12,7 @@ description="placeholder ; writing"
 [dependencies]
 blake3 = "1.0.0"
 ed25519-dalek-blake3 = "1.0.4"
-libc = "0.2.103"
+libc = "0.2.104"
 rand = "0.8.4"
 safer-ffi = { version = "0.0.6", features = ["proc_macros"] }
 static_init = "1.0.1"
