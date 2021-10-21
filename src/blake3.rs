@@ -5,7 +5,6 @@ use blake3::Hasher;
 use core::slice;
 use libc::c_void;
 use safer_ffi::prelude::*;
-use static_init::dynamic;
 use std::mem::size_of;
 use std::pin::Pin;
 
@@ -41,7 +40,7 @@ pub fn blake3_hasher_new(handle: Dart_Handle) -> repr_c::Box<Blake3Hasher> {
     Dart_NewFinalizableHandle_DL(
       handle,
       Box::into_raw(pin) as *mut c_void,
-      32,
+      size_of::<Hasher>(),
       None, //Some(_blake3_hasher_gc),
     );
   }

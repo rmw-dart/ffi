@@ -4,6 +4,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![allow(dead_code)]
 
 use safer_ffi::prelude::*;
 
@@ -19,11 +20,9 @@ pub struct _Dart_IsolateGroup {
   _unused: [u8; 0],
 }
 pub type Dart_IsolateGroup = *mut _Dart_IsolateGroup;
-
 #[derive_ReprC]
 #[ReprC::opaque]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct _Dart_Handle {
   _unused: [u8; 0],
 }
