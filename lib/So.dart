@@ -15,7 +15,8 @@ void init() {
 
   final init_api = dylib.lookupFunction<IntPtr Function(Pointer<Void>),
       int Function(Pointer<Void>)>("InitDartApiDL");
-  assert(0 == init_api(NativeApi.initializeApiDLData));
+  final initResult = init_api(NativeApi.initializeApiDLData);
+  assert(0 == initResult);
 
   So = Ffi(dylib);
 }

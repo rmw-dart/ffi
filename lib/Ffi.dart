@@ -41,21 +41,6 @@ class Ffi {
   late final _dart_blake3_hasher_new _blake3_hasher_new =
       _blake3_hasher_new_ptr.asFunction<_dart_blake3_hasher_new>();
 
-  void blake3_gc_bind(
-    Object handle,
-    ffi.Pointer<ffi.Void> pointer,
-  ) {
-    return _blake3_gc_bind(
-      handle,
-      pointer,
-    );
-  }
-
-  late final _blake3_gc_bind_ptr =
-      _lookup<ffi.NativeFunction<_c_blake3_gc_bind>>('blake3_gc_bind');
-  late final _dart_blake3_gc_bind _blake3_gc_bind =
-      _blake3_gc_bind_ptr.asFunction<_dart_blake3_gc_bind>();
-
   void blake3_hasher_update(
     ffi.Pointer<Blake3Hasher> hasher,
     ffi.Pointer<ffi.Uint8> data,
@@ -86,6 +71,21 @@ class Ffi {
       _lookup<ffi.NativeFunction<_c_blake3_hasher_end>>('blake3_hasher_end');
   late final _dart_blake3_hasher_end _blake3_hasher_end =
       _blake3_hasher_end_ptr.asFunction<_dart_blake3_hasher_end>();
+
+  void blake3_gc_bind(
+    Object handle,
+    ffi.Pointer<ffi.Void> pointer,
+  ) {
+    return _blake3_gc_bind(
+      handle,
+      pointer,
+    );
+  }
+
+  late final _blake3_gc_bind_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_gc_bind>>('blake3_gc_bind');
+  late final _dart_blake3_gc_bind _blake3_gc_bind =
+      _blake3_gc_bind_ptr.asFunction<_dart_blake3_gc_bind>();
 
   ffi.Pointer<ffi.Uint8> rand_u8_32() {
     return _rand_u8_32();
@@ -582,16 +582,6 @@ typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
 
 typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
 
-typedef _c_blake3_gc_bind = ffi.Void Function(
-  ffi.Handle handle,
-  ffi.Pointer<ffi.Void> pointer,
-);
-
-typedef _dart_blake3_gc_bind = void Function(
-  Object handle,
-  ffi.Pointer<ffi.Void> pointer,
-);
-
 typedef _c_blake3_hasher_update = ffi.Void Function(
   ffi.Pointer<Blake3Hasher> hasher,
   ffi.Pointer<ffi.Uint8> data,
@@ -610,6 +600,16 @@ typedef _c_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
 
 typedef _dart_blake3_hasher_end = ffi.Pointer<ffi.Uint8> Function(
   ffi.Pointer<Blake3Hasher> hasher,
+);
+
+typedef _c_blake3_gc_bind = ffi.Void Function(
+  ffi.Handle handle,
+  ffi.Pointer<ffi.Void> pointer,
+);
+
+typedef _dart_blake3_gc_bind = void Function(
+  Object handle,
+  ffi.Pointer<ffi.Void> pointer,
 );
 
 typedef _c_rand_u8_32 = ffi.Pointer<ffi.Uint8> Function();
