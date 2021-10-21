@@ -7,10 +7,6 @@ import 'package:ffi/ffi.dart' show calloc;
 
 final DIR = path.dirname(Platform.script.toFilePath());
 
-void doClosureCallback(void Function() callback) {
-  callback();
-}
-
 late final Ffi So;
 
 void init() {
