@@ -42,7 +42,7 @@ pub fn blake3_hasher_new(handle: Dart_Handle) -> repr_c::Box<Blake3Hasher> {
       handle,
       Box::into_raw(pin) as *mut c_void,
       32,
-      Some(_blake3_hasher_gc),
+      None, //Some(_blake3_hasher_gc),
     );
   }
   peer

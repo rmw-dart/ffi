@@ -6,20 +6,22 @@ import 'dart:typed_data' show Uint8List;
 import 'package:ffi/ffi.dart' show calloc;
 
 final DIR = path.dirname(Platform.script.toFilePath());
-final so = path.join(DIR, 'ffi.so');
-final dylib = DynamicLibrary.open(so);
 
 void doClosureCallback(void Function() callback) {
   callback();
 }
 
-final So = Ffi(dylib);
+late final Ffi So;
 
 void init() {
+  final so = path.join(DIR, 'ffi.so');
+  final dylib = DynamicLibrary.open(so);
+
   final init_api = dylib.lookupFunction<IntPtr Function(Pointer<Void>),
       int Function(Pointer<Void>)>("InitDartApiDL");
-
   assert(0 == init_api(NativeApi.initializeApiDLData));
+
+  So = Ffi(dylib);
 }
 
 extension Uint8ListPointer on Uint8List {
