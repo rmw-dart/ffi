@@ -3,7 +3,6 @@ use crate::dart::Dart_NewFinalizableHandle_DL;
 use crate::dart_sdk::Dart_Handle;
 use blake3::Hasher;
 use core::slice;
-use libc::c_void;
 use safer_ffi::prelude::*;
 use std::mem::size_of;
 use std::pin::Pin;
@@ -27,24 +26,9 @@ impl Blake3Hasher {
   }
 }
 
-extern "C" fn _blake3_hasher_gc(isolate_callback_data: *mut c_void, peer: *mut c_void) {
-  //drop(peer);
-  println!("todo gc !!!");
-}
-
 #[ffi_export]
-pub fn blake3_hasher_new(handle: Dart_Handle) -> repr_c::Box<Blake3Hasher> {
-  let peer = repr_c::Box::new(Blake3Hasher::new());
-  let pin = Box::new(Pin::new(&peer));
-  unsafe {
-    Dart_NewFinalizableHandle_DL(
-      handle,
-      Box::into_raw(pin) as *mut c_void,
-      size_of::<Hasher>(),
-      None, //Some(_blake3_hasher_gc),
-    );
-  }
-  peer
+pub fn blake3_hasher_new() -> repr_c::Box<Blake3Hasher> {
+  repr_c::Box::new(Blake3Hasher::new())
 }
 
 #[ffi_export]
@@ -56,6 +40,23 @@ pub fn blake3_hasher_update(hasher: &mut Blake3Hasher, data: *const u8, len: usi
 #[ffi_export]
 pub fn blake3_hasher_end(hasher: repr_c::Box<Blake3Hasher>) -> *const u8 {
   let r = const_u8(*hasher.h.finalize().as_bytes());
-  drop(hasher);
+  //drop(hasher);
   r
+}
+
+extern "C" fn _blake3_hasher_gc(isolate_callback_data: *mut libc::c_void, peer: *mut libc::c_void) {
+  //drop(peer);
+  println!("todo gc !!!");
+}
+
+#[ffi_export]
+pub fn blake3_gc_bind(handle: Dart_Handle, pointer: *mut libc::c_void) {
+  unsafe {
+    Dart_NewFinalizableHandle_DL(
+      handle,
+      pointer,
+      size_of::<Hasher>(),
+      None, //Some(_blake3_hasher_gc),
+    );
+  }
 }

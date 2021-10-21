@@ -16,7 +16,8 @@ Uint8List hash(Uint8List data) {
 class Hasher {
   late Pointer<Ffi.Blake3Hasher> hasher;
   Hasher() {
-    this.hasher = So.blake3_hasher_new(this);
+    this.hasher = So.blake3_hasher_new();
+    So.blake3_gc_bind(this, this.hasher.cast());
   }
   void update(Uint8List data) {
     final ptr = data.ptr();

@@ -32,18 +32,29 @@ class Ffi {
   late final _dart_blake3_hash _blake3_hash =
       _blake3_hash_ptr.asFunction<_dart_blake3_hash>();
 
-  ffi.Pointer<Blake3Hasher> blake3_hasher_new(
-    Object handle,
-  ) {
-    return _blake3_hasher_new(
-      handle,
-    );
+  ffi.Pointer<Blake3Hasher> blake3_hasher_new() {
+    return _blake3_hasher_new();
   }
 
   late final _blake3_hasher_new_ptr =
       _lookup<ffi.NativeFunction<_c_blake3_hasher_new>>('blake3_hasher_new');
   late final _dart_blake3_hasher_new _blake3_hasher_new =
       _blake3_hasher_new_ptr.asFunction<_dart_blake3_hasher_new>();
+
+  void blake3_gc_bind(
+    Object handle,
+    ffi.Pointer<ffi.Void> pointer,
+  ) {
+    return _blake3_gc_bind(
+      handle,
+      pointer,
+    );
+  }
+
+  late final _blake3_gc_bind_ptr =
+      _lookup<ffi.NativeFunction<_c_blake3_gc_bind>>('blake3_gc_bind');
+  late final _dart_blake3_gc_bind _blake3_gc_bind =
+      _blake3_gc_bind_ptr.asFunction<_dart_blake3_gc_bind>();
 
   void blake3_hasher_update(
     ffi.Pointer<Blake3Hasher> hasher,
@@ -369,9 +380,9 @@ class _opaque_pthread_t extends ffi.Struct {
   external ffi.Array<ffi.Int8> __opaque;
 }
 
-class _Dart_Handle extends ffi.Opaque {}
-
 class Blake3Hasher extends ffi.Opaque {}
+
+class _Dart_Handle extends ffi.Opaque {}
 
 class Ed25519Keypair extends ffi.Opaque {}
 
@@ -567,12 +578,18 @@ typedef _dart_blake3_hash = ffi.Pointer<ffi.Uint8> Function(
   int len,
 );
 
-typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function(
+typedef _c_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+
+typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function();
+
+typedef _c_blake3_gc_bind = ffi.Void Function(
   ffi.Handle handle,
+  ffi.Pointer<ffi.Void> pointer,
 );
 
-typedef _dart_blake3_hasher_new = ffi.Pointer<Blake3Hasher> Function(
+typedef _dart_blake3_gc_bind = void Function(
   Object handle,
+  ffi.Pointer<ffi.Void> pointer,
 );
 
 typedef _c_blake3_hasher_update = ffi.Void Function(
